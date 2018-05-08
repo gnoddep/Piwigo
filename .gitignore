@@ -1,6 +1,8 @@
 # Piwigo specific directories
 /_data
 /plugins/*
+!/plugins/UserCollections
+!/plugins/Preload
 !/plugins/index.php
 /upload
 /galleries/*

@@ -1,0 +1,6 @@
+[submodule "plugins/UserCollections"]
+	path = plugins/UserCollections
+	url = https://github.com/gnoddep/Piwigo-User-Collections
+[submodule "plugins/Preload"]
+	path = plugins/Preload
+	url = git@github.com:gnoddep/Piwigo-Preload.git
