@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 /*
 Language Name: Català [CA]
-Version: 2.9.3
+Version: 2.9.4
 Language URI: http://piwigo.org/ext/extension_view.php?eid=413
 Author: Piwigo team
 Author URI: http://piwigo.org
