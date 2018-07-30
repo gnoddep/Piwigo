@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 /*
 Language Name: Українська [UA]
-Version: auto
+Version: 2.9.3
 Language URI: http://piwigo.org/ext/extension_view.php?eid=523
 Author: Piwigo team
 Author URI: http://piwigo.org
