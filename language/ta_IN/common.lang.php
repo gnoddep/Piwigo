@@ -22,7 +22,7 @@
 // +-----------------------------------------------------------------------+
 /*
 Language Name: தமிழ் [IN]
-Version: 2.9.4
+Version: 2.9.5
 Language URI: http://piwigo.org/ext/extension_view.php?eid=638
 Author: Piwigo team
 Author URI: http://piwigo.org
