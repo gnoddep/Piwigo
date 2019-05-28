@@ -2,7 +2,7 @@
 {combine_script id='cookie' require='jquery' path='themes/bootstrap_darkroom/js/jquery.cookie.js' load='footer'}
 {combine_script id='equalheights' require='jquery' path='themes/bootstrap_darkroom/js/jquery.equalheights.js' load='footer'}
 {if get_device() != 'desktop'}
-{combine_script id='jquery.mobile-events' path='themes/bootstrap_darkroom/js/jquery.mobile-events.min.js' require='jquery' load='footer'}
+{combine_script id='jquery.mobile-events' path='themes/bootstrap_darkroom/node_modules/jQuery-Touch-Events/src/jquery.mobile-events.min.js' require='jquery' load='footer'}
 {/if}
 {if !empty($PLUGIN_INDEX_CONTENT_BEFORE)}{$PLUGIN_INDEX_CONTENT_BEFORE}{/if}
 
@@ -181,6 +181,34 @@ $(document).ready(function() {
     <!-- End of categories -->
 {/if}
 
+{if !empty($category_search_results)}
+<div class="container{if $theme_config->fluid_width}-fluid{/if}">
+    <h3 class="category_search_results">{'Album results for'|@translate} <em><strong>{$QUERY_SEARCH}</strong></em></h3>
+    <p>
+        <em><strong>
+{foreach from=$category_search_results item=res name=res_loop}
+{if !$smarty.foreach.res_loop.first} &mdash; {/if}
+            {$res}
+{/foreach}
+        </strong></em>
+    </p>
+</div>
+{/if}
+
+{if !empty($tag_search_results)}
+<div class="container{if $theme_config->fluid_width}-fluid{/if}">
+    <h3 class="tag_search_results">{'Tag results for'|@translate} <em><strong>{$QUERY_SEARCH}</strong></em></h3>
+    <p>
+        <em><strong>
+{foreach from=$tag_search_results item=tag name=res_loop}
+{if !$smarty.foreach.res_loop.first} &mdash; {/if}
+            <a href="{$tag.URL}">{$tag.name}</a>
+{/foreach}
+        </strong></em>
+    </p>
+</div>
+{/if}
+
 {if !empty($THUMBNAILS)}
         <!-- Start of thumbnails -->
         <div id="thumbnails" class="row">{$THUMBNAILS}</div>
@@ -205,15 +233,15 @@ $('#startSlideshow').on('click touchstart', function() {
 
 function setupPhotoSwipe() {
    $('#thumbnails').find("a:has(img):not(.addCollection)").each(function(_index) {
-      var $pswpIndex;
+      var $pswpIndex = {if isset($GDThumb) || isset($GThumb)}{$START_ID}{else}0{/if};
       if ($(this).find('img').length > 0) {
          var _href = $(this).href;
          $(this).attr('href', 'javascript:;').attr('data-href', _href);
          if (!$(this).attr('data-index')) {
             $(this).attr('data-index', _index);
-            $pswpIndex = _index;
+            $pswpIndex = $pswpIndex + _index;
          } else {
-            $pswpIndex = $(this).data('index');
+            $pswpIndex = $pswpIndex + $(this).data('index');
          }
          $(this).off('click tap').on('click tap', function(event) {
             event.preventDefault();
@@ -267,34 +295,6 @@ $('.card-thumbnail').find('img[src*="pwg_representative"]').each(function() {
 {if !empty($thumb_navbar) && !isset($loaded_plugins['rv_tscroller'])}
     {include file='navigation_bar.tpl' fragment="content"|@get_extent:'navbar' navbar=$thumb_navbar}
 {/if}
-</div>
-{/if}
-
-{if !empty($category_search_results)}
-<div class="container{if $theme_config->fluid_width}-fluid{/if}">
-    <h3 class="category_search_results">{'Album results for'|@translate} <em><strong>{$QUERY_SEARCH}</strong></em></h3>
-    <p>
-        <em><strong>
-{foreach from=$category_search_results item=res name=res_loop}
-{if !$smarty.foreach.res_loop.first} &mdash; {/if}
-            {$res}
-{/foreach}
-        </strong></em>
-    </p>
-</div>
-{/if}
-
-{if !empty($tag_search_results)}
-<div class="container{if $theme_config->fluid_width}-fluid{/if}">
-    <h3 class="tag_search_results">{'Tag results for'|@translate} <em><strong>{$QUERY_SEARCH}</strong></em></h3>
-    <p>
-        <em><strong>
-{foreach from=$tag_search_results item=tag name=res_loop}
-{if !$smarty.foreach.res_loop.first} &mdash; {/if}
-            <a href="{$tag.URL}">{$tag.name}</a>
-{/foreach}
-        </strong></em>
-    </p>
 </div>
 {/if}
 

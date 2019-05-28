@@ -1,6 +1,6 @@
 <!-- Start of picture.tpl -->
 {if get_device() != 'desktop'}
-{combine_script id='jquery.mobile-events' path='themes/bootstrap_darkroom/js/jquery.mobile-events.min.js' require='jquery' load='footer'}
+{combine_script id='jquery.mobile-events' path='themes/bootstrap_darkroom/node_modules/jQuery-Touch-Events/src/jquery.mobile-events.min.js' require='jquery' load='footer'}
 {/if}
 
 {if !empty($PLUGIN_PICTURE_BEFORE)}{$PLUGIN_PICTURE_BEFORE}{/if}
@@ -59,12 +59,6 @@ $('#theImage img').bind('swipeleft swiperight', function (event) {
         <a href="https://www.facebook.com/sharer/sharer.php?u={$http_scheme}://{$smarty.server.HTTP_HOST}{$smarty.server.REQUEST_URI}"
            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"{if $theme_config->social_buttons} class="btn btn-sm btn-social btn-raised btn-facebook"{/if}>
             <i class="fab fa-facebook"></i>{if $theme_config->social_buttons} Facebook{/if}
-        </a>
-{/if}
-{if $theme_config->social_google_plus}
-        <a href="https://plus.google.com/share?url={$http_scheme}://{$smarty.server.HTTP_HOST}{$smarty.server.REQUEST_URI}"
-           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+"{if $theme_config->social_buttons} class="btn btn-sm btn-social btn-raised btn-google"{/if}>
-            <i class="fab fa-google"></i>{if $theme_config->social_buttons} Google+{/if}
         </a>
 {/if}
 {if $theme_config->social_pinterest}
