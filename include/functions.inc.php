@@ -463,6 +463,36 @@ UPDATE '.USER_INFOS_TABLE.'
     $ip = substr($ip, 0, 15);
   }
 
+  // If plugin developers add their own sections, Piwigo will automatically add it in the history.section enum column
+  if (isset($page['section']))
+  {
+    // set cache if not available
+    if (!isset($conf['history_sections_cache']))
+    {
+      conf_update_param('history_sections_cache', get_enums(HISTORY_TABLE, 'section'), true);
+    }
+
+    $conf['history_sections_cache'] = safe_unserialize($conf['history_sections_cache']);
+
+    if (in_array($page['section'], $conf['history_sections_cache']))
+    {
+      $section = $page['section'];
+    }
+    elseif (preg_match('/^[a-zA-Z0-9_-]+$/', $page['section']))
+    {
+      $history_sections = get_enums(HISTORY_TABLE, 'section');
+      $history_sections[] = $page['section'];
+
+      // alter history table structure, to include a new section
+      pwg_query('ALTER TABLE '.HISTORY_TABLE.' CHANGE section section enum(\''.implode("','", array_unique($history_sections)).'\') DEFAULT NULL;');
+
+      // and refresh cache
+      conf_update_param('history_sections_cache', get_enums(HISTORY_TABLE, 'section'), true);
+
+      $section = $page['section'];
+    }
+  }
+  
   $query = '
 INSERT INTO '.HISTORY_TABLE.'
   (
@@ -484,7 +514,7 @@ INSERT INTO '.HISTORY_TABLE.'
     CURRENT_TIME,
     '.$user['id'].',
     \''.$ip.'\',
-    '.(isset($page['section']) ? "'".$page['section']."'" : 'NULL').',
+    '.(isset($section) ? "'".$section."'" : 'NULL').',
     '.(isset($page['category']['id']) ? $page['category']['id'] : 'NULL').',
     '.(isset($image_id) ? $image_id : 'NULL').',
     '.(isset($image_type) ? "'".$image_type."'" : 'NULL').',
